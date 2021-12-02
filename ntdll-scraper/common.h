@@ -1,6 +1,6 @@
 
 #ifndef common_h
 #define common_h
-
-#include <windows.h>
+#include <Windows.h>
+#include <stdio.h>
 #endif

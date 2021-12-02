@@ -1,6 +1,7 @@
 
 #include "console.h"
 #include "scrap.h"
+#include "psapi.h"
 
 void FillScraperData(PScraperData data, const char* dllName){
 	data->hModule = LoadLibraryA(dllName);
@@ -26,7 +27,7 @@ BOOL FindBytes(PScraperData data, BYTE* bytes, size_t sizeOfBytes, LPVOID* addre
 	for (;start < data->Base + data->ImageSize; (BYTE*)start++){
 		if (success) break;
 		for (size_t i = 0; i < sizeOfBytes; i++){
-			if (bytes[i] != (BYTE*)start[i])
+			if (bytes[i] != ((BYTE *)start)[i])
 				break;
 			if (i == sizeOfBytes-1)
 				success = TRUE;

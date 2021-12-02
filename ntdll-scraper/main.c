@@ -1,6 +1,7 @@
 
 #include "scrap.h"
 #include "console.h"
+#include "utils.h"
 void PrintUsage(){
 	printf("Usage: ntdllscraper.exe <bytes (hex)>.\n");
 }

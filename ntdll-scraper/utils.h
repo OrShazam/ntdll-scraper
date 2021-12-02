@@ -1,3 +1,3 @@
 #include "common.h"
 
-BYTE* HexTranslateSafe(const char* text);
+BYTE* HexTranslateSafe(const char* , int*);
