@@ -4,14 +4,37 @@
 #include "psapi.h"
 
 void FillScraperData(PScraperData data, const char* dllName){
+	static NTSTATUS(WINAPI *_GetModuleInformation)(
+		IN  HANDLE hProcess,
+		IN  HMODULE hModule,
+		OUT LPMODULEINFO lpmodinfo,
+		IN DWORD cb
+	) = NULL;
 	data->hModule = LoadLibraryA(dllName);
 	if (data->hModule == NULL){
-		PrintError("Can't find address of ntdll.\n");
+		PrintError("Can't find address of %s.\n", dllName);
 		return;
+	}
+	if (!_GetModuleInformation){
+		HMODULE kernel32 = LoadLibraryA("kernel32.dll");
+		if (!kernel32){
+			// shouldn't happen
+			return;
+		}
+		FARPROC procPtr = GetProcAddress(kernel32,"GetModuleInformation");
+		if (!procPtr){
+			return;
+		}
+		_GetModuleInformation = (NTSTATUS(WINAPI*)(
+			HANDLE,
+			HMODULE,
+			LPMODULEINFO,
+			DWORD)		
+		)procPtr;
 	}
 	MODULEINFO info;
 	DWORD cb = sizeof(MODULEINFO);
-	if (!GetModuleInformation(GetCurrentProcess(),
+	if (!_GetModuleInformation(GetCurrentProcess(),
 		data->hModule,
 		&info, cb)){
 		PrintError("Can't retrieve module information.\n");
