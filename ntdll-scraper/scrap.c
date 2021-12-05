@@ -1,7 +1,6 @@
 
 #include "console.h"
 #include "scrap.h"
-#include "psapi.h"
 
 void FillScraperData(PScraperData data, const char* dllName){
 	static NTSTATUS(WINAPI *_GetModuleInformation)(
