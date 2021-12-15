@@ -26,6 +26,14 @@ void PrintError(const LPSTR fmt, ...){
 	va_list args;
 	va_start(args, fmt);
 	printColor(CONSOLE_WHITE,fmt,args);
+	DWORD errorCode = GetLastError();
+		char* const message = NULL;
+		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM
+                      | FORMAT_MESSAGE_IGNORE_INSERTS,
+                  NULL, errorCode,
+                  MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US),
+                  (LPTSTR)&message, 0, NULL);
+	printColor(CONSOLE_WHITE,"LastError: %s",message);
 	va_end(args);
 }
 void PrintSuccess(const LPSTR fmt, ...){

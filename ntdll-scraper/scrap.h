@@ -3,7 +3,7 @@
 typedef struct {
 	HMODULE hModule;
 	LPVOID Base;
-	DWORD ImageSize;
+	ULONGLONG ImageSize;
 } ScraperData, *PScraperData;
 
 void FillScraperData(PScraperData, const char*);

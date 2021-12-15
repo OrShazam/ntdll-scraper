@@ -27,11 +27,11 @@ static void HexTranslate(const char* text, BYTE* bytes, int len){
 
 	for (int i = 0; i < len;i++){
 		currByte = (*text <= '9') ? *text-'0' : (*text <= 'Z') ? 
-			*text - 'A' + 1 : *text - 'a' + 1;
+			*text - 'A' + 10 : *text - 'a' + 10;
 		currByte *= 16;
 		text++;
 		currByte += (*text <= '9') ? *text-'0' : (*text <= 'Z') ? 
-			*text - 'A' + 1 : *text - 'a' + 1;
+			*text - 'A' + 10 : *text - 'a' + 10;
 		text++;
 		bytes[i] = currByte;
 	}

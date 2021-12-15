@@ -3,7 +3,7 @@
 #include "console.h"
 #include "utils.h"
 void PrintUsage(){
-	printf("Usage: ntdllscraper.exe <bytes (hex)>.\n");
+	printf("Usage: ntdllscraper.exe <bytes (hex)>\n");
 }
 int main(int argc, char* argv[]){
 	if (argc < 2){
@@ -12,8 +12,10 @@ int main(int argc, char* argv[]){
 	}
 	int len;
 	BYTE* bytes = HexTranslateSafe(argv[1], &len);
+	for (int i = 0; i < len; i++){
+	}
 	if (bytes == NULL){
-		PrintError("Couldn't translate bytes.\n");
+		PrintError("Couldn't translate bytes\n");
 		PrintUsage();
 		return 1;
 	}
@@ -21,10 +23,10 @@ int main(int argc, char* argv[]){
 	FillScraperData(&data, "ntdll.dll");
 	LPVOID address;
 	if (FindBytes(&data,bytes,len,&address)){
-		PrintSuccess("Found byte sequence at address at %p.\n", address);
+		printf("Found byte sequence at address at %p\n", address);
 	}
 	else 
-		PrintError("Couldn't find byte sequence.\n");
+		PrintError("Couldn't find byte sequence\n");
 	
 	HeapFree(GetProcessHeap(),
 		0,
